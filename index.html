@@ -7,58 +7,786 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Website cá nhân chia sẻ thông tin hữu ích.">
   <title>Bảng Mã Linh Kiện – Tra Cứu Mã Nhanh</title>
-  <style>
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f1f5f9;
-      color: #1e293b;
-      line-height: 1.6;
-    }
-    header {
-      background: #1769aa;
-      color: white;
-      text-align: center;
-      padding: 40px 20px;
-    }
-    main {
-      max-width: 800px;
-      margin: 25px auto;
-      padding: 25px;
-      background: white;
-      border-radius: 12px;
-    }
-    a { color: #1769aa; }
-    footer {
-      text-align: center;
-      padding: 20px;
-      color: #64748b;
-    }
-  </style>
+  <style><style>
+		* {
+			box-sizing: border-box;
+		}
+
+		body {
+			margin: 0;
+			padding: 20px;
+			font-family: Arial, sans-serif;
+			background: #f3f3f3;
+		}
+
+		h1 {
+			text-align: center;
+			margin-bottom: 20px;
+		}
+
+		/* Khu vực tìm kiếm */
+		.tim-kiem {
+			display: flex;
+			gap: 10px;
+			margin-bottom: 20px;
+		}
+
+		input,
+		select {
+			padding: 10px;
+			font-size: 16px;
+			border: 1px solid #999;
+			border-radius: 6px;
+		}
+
+		input {
+			flex: 1;
+		}
+
+		/* Khung bảng */
+		.bang {
+			background: white;
+			margin-bottom: 30px;
+			overflow-x: auto;
+		}
+
+		table {
+			width: 100%;
+			min-width: 900px;
+			border-collapse: collapse;
+		}
+
+		caption {
+			border: 1px solid black;
+			padding: 12px;
+			font-size: 24px;
+			font-weight: bold;
+		}
+
+		th,
+		td {
+			border: 1px solid #555;
+			padding: 9px;
+			text-align: center;
+		}
+
+		th {
+			background: #ddd;
+		}
+
+		td.model {
+			font-weight: bold;
+			font-size: 18px;
+		}
+
+		td.loai {
+			font-weight: bold;
+		}
+
+		tr:hover {
+			background: #fff3a3;
+		}
+	</style>
 </head>
-<body><h1>Bảng mã linh kiện – Tra cứu nhanh</h1>
+
+<body>
+
+	<h1>BẢNG MÃ LINH KIỆN</h1>
+
+	<!-- Tìm kiếm -->
+	<div class="tim-kiem">
+
+	<input
+		type="text"
+		id="timKiem"
+		placeholder="Nhập mã cần tìm..."
+	>
+
+	<!-- Lọc màu -->
+	<select id="locMau">
+		<option value="tatca">Tất cả màu</option>
+		<option value="den">ĐEN</option>
+		<option value="trang">TRẮNG</option>
+	</select>
+
+	<!-- Lọc loại -->
+	<select id="locLoai">
+		<option value="tatca">Tất cả loại</option>
+		<option value="HT">HT</option>
+		<option value="HQ">HQ</option>
+		<option value="BRI">BRI</option>
+	</select>
+
+	<!-- Lọc Model -->
+	<select id="locModel">
+		<option value="tatca">Tất cả Model</option>
+		<option value="420">420</option>
+		<option value="540">540</option>
+		<option value="640">640</option>
+	</select>
+
+	<!-- Lọc tai -->
+	<select id="locTai">
+		<option value="tatca">Tất cả tai</option>
+		<option value="L">L - Trái</option>
+		<option value="R">R - Phải</option>
+	</select>
+
+</div>
+
+
+	<!-- ========================= -->
+	<!-- BẢNG ĐEN -->
+	<!-- ========================= -->
+
+	<div class="bang bang-den">
+
+		<table>
+
+			<caption>ĐEN</caption>
+
+			<thead>
+
+				<tr>
+					<th>Model</th>
+					<th>Loại</th>
+					<th>Tai</th>
+					<th>GH97</th>
+					<th>GH96</th>
+					<th>Front</th>
+					<th>Rear</th>
+				</tr>
+
+			</thead>
+
+			<tbody><h1>Bảng mã linh kiện – Tra cứu nhanh</h1>
 
 <p>
     Công cụ tra cứu mã linh kiện trực tuyến giúp bạn tìm mã
     theo model và vị trí tai trái (L) hoặc tai phải (R).
     Nhập mã hoặc sử dụng bộ lọc để tìm thông tin cần thiết.
 </p>
-  <header>
-    <h1>Chào mừng đến với website của tôi!</h1>
-    <p>Nơi chia sẻ những nội dung hữu ích</p>
-  </header>
 
-  <main>
-    <h2>Giới thiệu</h2>
-    <p>Đây là website riêng của tôi.</p>
-    <p>Tôi sẽ tiếp tục cập nhật nội dung mới tại đây.</p>
-    <h2>Nội dung của website</h2>
-    <p>Hãy quay lại để khám phá những thông tin mới nhé!</p>
-  </main>
+				<!-- MODEL 420 -->
 
-  <footer>
-    © 2026 - Website của tôi
-  </footer>
+				<tr>
+					<td class="model">420</td>
+					<td class="loai">HT</td>
+					<td>L</td>
+					<td>GH97-30931A</td>
+					<td>GH96-20872A</td>
+					<td>GH98-50425A</td>
+					<td>GH96-20574A</td>
+				</tr>
+
+				<tr>
+					<td class="model">420</td>
+					<td class="loai">HT</td>
+					<td>R</td>
+					<td>GH97-30932A</td>
+					<td>GH96-20873A</td>
+					<td>GH98-50426A</td>
+					<td>GH96-20575A</td>
+				</tr>
+
+				<tr>
+					<td class="model">420</td>
+					<td class="loai">HQ</td>
+					<td>L</td>
+					<td>GH97-31253A</td>
+					<td>GH96-21114A</td>
+					<td>GH98-50696A</td>
+					<td>GH96-20920A</td>
+				</tr>
+
+				<tr>
+					<td class="model">420</td>
+					<td class="loai">HQ</td>
+					<td>R</td>
+					<td>GH97-31254A</td>
+					<td>GH96-21115A</td>
+					<td>GH98-50697A</td>
+					<td>GH96-20919A</td>
+				</tr>
+
+				<tr>
+					<td class="model">420</td>
+					<td class="loai">BRI</td>
+					<td>L</td>
+					<td>GH97-31255A</td>
+					<td>GH96-21061A</td>
+					<td>GH98-50698A</td>
+					<td></td>
+				</tr>
+
+				<tr>
+					<td class="model">420</td>
+					<td class="loai">BRI</td>
+					<td>R</td>
+					<td>GH97-31256A</td>
+					<td>GH96-21062A</td>
+					<td>GH98-50699A</td>
+					<td></td>
+				</tr>
+
+
+				<!-- MODEL 540 -->
+
+				<tr>
+					<td class="model">540</td>
+					<td class="loai">HT</td>
+					<td>L</td>
+					<td>GH97-31667A</td>
+					<td>GH96-21820A</td>
+					<td>GH98-50894A</td>
+					<td>GH96-21390A</td>
+				</tr>
+
+				<tr>
+					<td class="model">540</td>
+					<td class="loai">HT</td>
+					<td>R</td>
+					<td>GH97-31668A</td>
+					<td>GH96-21819A</td>
+					<td>GH98-50895A</td>
+					<td>GH96-21389A</td>
+				</tr>
+
+				<tr>
+					<td class="model">540</td>
+					<td class="loai">HQ</td>
+					<td>L</td>
+					<td>GH97-31675A</td>
+					<td>GH96-22110A</td>
+					<td>GH98-51004A</td>
+					<td>GH96-21964A</td>
+				</tr>
+
+				<tr>
+					<td class="model">540</td>
+					<td class="loai">HQ</td>
+					<td>R</td>
+					<td>GH97-31677A</td>
+					<td>GH96-22109A</td>
+					<td>GH98-51003A</td>
+					<td>GH96-21965A</td>
+				</tr>
+
+				<tr>
+					<td class="model">540</td>
+					<td class="loai">BRI</td>
+					<td>L</td>
+					<td>GH97-31676A</td>
+					<td>GH96-22213A</td>
+					<td>GH98-51005A</td>
+					<td></td>
+				</tr>
+
+				<tr>
+					<td class="model">540</td>
+					<td class="loai">BRI</td>
+					<td>R</td>
+					<td>GH97-31678A</td>
+					<td>GH96-22214A</td>
+					<td>GH98-51002A</td>
+					<td></td>
+				</tr>
+
+
+				<!-- MODEL 640 -->
+
+				<tr>
+					<td class="model">640</td>
+					<td class="loai">HT</td>
+					<td>L</td>
+					<td>GH97-31507A</td>
+					<td>GH96-21821A</td>
+					<td>GH98-50867A</td>
+					<td>GH96-21316A</td>
+				</tr>
+
+				<tr>
+					<td class="model">640</td>
+					<td class="loai">HT</td>
+					<td>R</td>
+					<td>GH97-31508A</td>
+					<td>GH96-21822A</td>
+					<td>GH98-50868A</td>
+					<td>GH96-21318A</td>
+				</tr>
+
+				<tr>
+					<td class="model">640</td>
+					<td class="loai">HQ</td>
+					<td>L</td>
+					<td>GH97-31577A</td>
+					<td>GH96-22042A</td>
+					<td>GH96-22041A</td>
+					<td>GH96-22001A</td>
+				</tr>
+
+				<tr>
+					<td class="model">640</td>
+					<td class="loai">HQ</td>
+					<td>R</td>
+					<td>GH97-31573A</td>
+					<td>GH96-22043A</td>
+					<td>GH96-22040A</td>
+					<td>GH96-21999A</td>
+				</tr>
+
+				<tr>
+					<td class="model">640</td>
+					<td class="loai">BRI</td>
+					<td>L</td>
+					<td>GH97-31578A</td>
+					<td>GH96-22212A</td>
+					<td>GH98-50982A</td>
+					<td></td>
+				</tr>
+
+				<tr>
+					<td class="model">640</td>
+					<td class="loai">BRI</td>
+					<td>R</td>
+					<td>GH97-31574A</td>
+					<td>GH96-22211A</td>
+					<td>GH98-50984A</td>
+					<td></td>
+				</tr>
+
+			</tbody>
+
+		</table>
+
+	</div>
+
+
+	<!-- ========================= -->
+	<!-- BẢNG TRẮNG -->
+	<!-- ========================= -->
+
+	<div class="bang bang-trang">
+
+		<table>
+
+			<caption>TRẮNG</caption>
+
+			<thead>
+
+				<tr>
+					<th>Model</th>
+					<th>Loại</th>
+					<th>Tai</th>
+					<th>GH97</th>
+					<th>GH96</th>
+					<th>Front</th>
+					<th>Rear</th>
+				</tr>
+
+			</thead>
+
+			<tbody>
+
+				<tr>
+					<td class="model">420</td>
+					<td class="loai">HT</td>
+					<td>L</td>
+					<td>GH97-30931B</td>
+					<td>GH96-20872B</td>
+					<td>GH98-50425B</td>
+					<td>GH96-20574B</td>
+				</tr>
+
+				<tr>
+					<td class="model">420</td>
+					<td class="loai">HT</td>
+					<td>R</td>
+					<td>GH97-30932B</td>
+					<td>GH96-20873B</td>
+					<td>GH98-50426B</td>
+					<td>GH96-20575B</td>
+				</tr>
+
+				<tr>
+					<td class="model">420</td>
+					<td class="loai">HQ</td>
+					<td>L</td>
+					<td>GH97-31253B</td>
+					<td>GH96-21114B</td>
+					<td>GH98-50696B</td>
+					<td>GH96-20920B</td>
+				</tr>
+
+				<tr>
+					<td class="model">420</td>
+					<td class="loai">HQ</td>
+					<td>R</td>
+					<td>GH97-31254B</td>
+					<td>GH96-21115B</td>
+					<td>GH98-50697B</td>
+					<td>GH96-20919B</td>
+				</tr>
+
+				<tr>
+					<td class="model">420</td>
+					<td class="loai">BRI</td>
+					<td>L</td>
+					<td>GH97-31255B</td>
+					<td>GH96-21061B</td>
+					<td>GH98-50698B</td>
+					<td></td>
+				</tr>
+
+				<tr>
+					<td class="model">420</td>
+					<td class="loai">BRI</td>
+					<td>R</td>
+					<td>GH97-31256B</td>
+					<td>GH96-21062B</td>
+					<td>GH98-50699B</td>
+					<td></td>
+				</tr>
+
+
+				<tr>
+					<td class="model">540</td>
+					<td class="loai">HT</td>
+					<td>L</td>
+					<td>GH97-31667B</td>
+					<td>GH96-21820B</td>
+					<td>GH98-50894B</td>
+					<td>GH96-21390B</td>
+				</tr>
+
+				<tr>
+					<td class="model">540</td>
+					<td class="loai">HT</td>
+					<td>R</td>
+					<td>GH97-31668B</td>
+					<td>GH96-21819B</td>
+					<td>GH98-50895B</td>
+					<td>GH96-21389B</td>
+				</tr>
+
+				<tr>
+					<td class="model">540</td>
+					<td class="loai">HQ</td>
+					<td>L</td>
+					<td>GH97-31675B</td>
+					<td>GH96-22110B</td>
+					<td>GH98-51004B</td>
+					<td>GH96-21964B</td>
+				</tr>
+
+				<tr>
+					<td class="model">540</td>
+					<td class="loai">HQ</td>
+					<td>R</td>
+					<td>GH97-31677B</td>
+					<td>GH96-22109B</td>
+					<td>GH98-51003B</td>
+					<td>GH96-21965B</td>
+				</tr>
+
+				<tr>
+					<td class="model">540</td>
+					<td class="loai">BRI</td>
+					<td>L</td>
+					<td>GH97-31676B</td>
+					<td>GH96-22213B</td>
+					<td>GH98-51005B</td>
+					<td></td>
+				</tr>
+
+				<tr>
+					<td class="model">540</td>
+					<td class="loai">BRI</td>
+					<td>R</td>
+					<td>GH97-31678B</td>
+					<td>GH96-22214B</td>
+					<td>GH98-51002B</td>
+					<td></td>
+				</tr>
+
+
+				<tr>
+					<td class="model">640</td>
+					<td class="loai">HT</td>
+					<td>L</td>
+					<td>GH97-31507B</td>
+					<td>GH96-21821B</td>
+					<td>GH98-50867B</td>
+					<td>GH96-21316B</td>
+				</tr>
+
+				<tr>
+					<td class="model">640</td>
+					<td class="loai">HT</td>
+					<td>R</td>
+					<td>GH97-31508B</td>
+					<td>GH96-21822B</td>
+					<td>GH98-50868B</td>
+					<td>GH96-21318B</td>
+				</tr>
+
+				<tr>
+					<td class="model">640</td>
+					<td class="loai">HQ</td>
+					<td>L</td>
+					<td>GH97-31577B</td>
+					<td>GH96-22042B</td>
+					<td>GH96-22041B</td>
+					<td>GH96-22001B</td>
+				</tr>
+
+				<tr>
+					<td class="model">640</td>
+					<td class="loai">HQ</td>
+					<td>R</td>
+					<td>GH97-31573B</td>
+					<td>GH96-22043B</td>
+					<td>GH96-22040B</td>
+					<td>GH96-21999B</td>
+				</tr>
+
+				<tr>
+					<td class="model">640</td>
+					<td class="loai">BRI</td>
+					<td>L</td>
+					<td>GH97-31578B</td>
+					<td>GH96-22212B</td>
+					<td>GH98-50982B</td>
+					<td></td>
+				</tr>
+
+				<tr>
+					<td class="model">640</td>
+					<td class="loai">BRI</td>
+					<td>R</td>
+					<td>GH97-31574B</td>
+					<td>GH96-22211B</td>
+					<td>GH98-50984B</td>
+					<td></td>
+				</tr>
+
+			</tbody>
+
+		</table>
+
+	</div>
+
+
+	<!-- ========================= -->
+	<!-- JAVASCRIPT -->
+	<!-- ========================= -->
+
+	<script>
+
+const timKiem = document.getElementById("timKiem");
+
+const locMau = document.getElementById("locMau");
+
+const locLoai = document.getElementById("locLoai");
+
+const locModel = document.getElementById("locModel");
+
+const locTai = document.getElementById("locTai");
+
+
+function locBang() {
+
+	// =========================
+	// LẤY GIÁ TRỊ BỘ LỌC
+	// =========================
+
+	let tuKhoa = timKiem.value.toLowerCase();
+
+	let mau = locMau.value;
+
+	let loai = locLoai.value;
+
+	let model = locModel.value;
+
+	let tai = locTai.value;
+
+
+	// =========================
+	// LẤY 2 BẢNG
+	// =========================
+
+	let bangDen = document.querySelector(".bang-den");
+
+	let bangTrang = document.querySelector(".bang-trang");
+
+
+	// =========================
+	// LỌC MÀU
+	// =========================
+
+	if (mau === "den") {
+
+		bangDen.style.display = "block";
+
+		bangTrang.style.display = "none";
+
+	}
+
+	else if (mau === "trang") {
+
+		bangDen.style.display = "none";
+
+		bangTrang.style.display = "block";
+
+	}
+
+	else {
+
+		bangDen.style.display = "block";
+
+		bangTrang.style.display = "block";
+
+	}
+
+
+	// =========================
+	// LỌC TỪNG DÒNG
+	// =========================
+
+	let cacDong = document.querySelectorAll("tbody tr");
+
+
+	cacDong.forEach(function(dong) {
+
+		let noiDung = dong.textContent.toLowerCase();
+
+
+		// -------------------------
+		// Lấy Model
+		// -------------------------
+
+		let modelCuaDong =
+			dong.children[0].textContent.trim();
+
+
+		// -------------------------
+		// Lấy Loại
+		// -------------------------
+
+		let loaiCuaDong =
+			dong.children[1].textContent.trim();
+
+
+		// -------------------------
+		// Lấy Tai
+		// -------------------------
+
+		let taiCuaDong =
+			dong.children[2].textContent.trim();
+
+
+		// =========================
+		// KIỂM TRA TỪ KHÓA
+		// =========================
+
+		let dungTuKhoa =
+			noiDung.includes(tuKhoa);
+
+
+		// =========================
+		// KIỂM TRA LOẠI
+		// =========================
+
+		let dungLoai =
+			loai === "tatca" ||
+			loaiCuaDong === loai;
+
+
+		// =========================
+		// KIỂM TRA MODEL
+		// =========================
+
+		let dungModel =
+			model === "tatca" ||
+			modelCuaDong === model;
+
+
+		// =========================
+		// KIỂM TRA TAI
+		// =========================
+
+		let dungTai =
+			tai === "tatca" ||
+			taiCuaDong === tai;
+
+
+		// =========================
+		// HIỂN THỊ
+		// =========================
+
+		if (
+			dungTuKhoa &&
+			dungLoai &&
+			dungModel &&
+			dungTai
+		) {
+
+			dong.style.display = "";
+
+		}
+
+		else {
+
+			dong.style.display = "none";
+
+		}
+
+	});
+
+}
+
+
+// =========================
+// CÁC SỰ KIỆN
+// =========================
+
+
+// Khi nhập mã
+timKiem.addEventListener(
+	"input",
+	locBang
+);
+
+
+// Khi chọn màu
+locMau.addEventListener(
+	"change",
+	locBang
+);
+
+
+// Khi chọn loại
+locLoai.addEventListener(
+	"change",
+	locBang
+);
+
+
+// Khi chọn Model
+locModel.addEventListener(
+	"change",
+	locBang
+);
+
+
+// Khi chọn tai
+locTai.addEventListener(
+	"change",
+	locBang
+);
+
+
+</script>
+
 </body>
 </html>
