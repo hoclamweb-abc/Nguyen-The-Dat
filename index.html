@@ -1,842 +1,667 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chúc Mừng Ngày 20/10 - Dành Tặng Em Yêu ❤️</title>
-    
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500;600;700&family=Montserrat:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,600;1,400&display=swap" rel="stylesheet">
-    
-    <!-- Canvas Confetti & FontAwesome -->
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chúc Mừng 20/10 Ebe Yêu 💖</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Montserrat:wght@400;600;700&family=Playfair+Display:ital,wght@0,600;1,400&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <style>
+    :root {
+      --primary: #ff4b72;
+      --primary-dark: #e02853;
+      --secondary: #ffb3c1;
+      --accent: #ffd1dc;
+      --bg-color: #fff0f3;
+      --text-dark: #4a2c32;
+      --card-bg: rgba(255, 255, 255, 0.88);
+      --shadow: 0 10px 30px rgba(255, 75, 114, 0.15);
+    }
 
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        rose: {
-                            50: '#fff1f2',
-                            100: '#ffe4e6',
-                            200: '#fecdd3',
-                            300: '#fda4af',
-                            400: '#fb7185',
-                            500: '#f43f5e',
-                            600: '#e11d48',
-                        },
-                        gold: '#d4af37',
-                    },
-                    fontFamily: {
-                        dancing: ['"Dancing Script"', 'cursive'],
-                        playfair: ['"Playfair Display"', 'serif'],
-                        montserrat: ['"Montserrat"', 'sans-serif'],
-                    }
-                }
-            }
-        }
-    </script>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
 
-    <style>
-        body {
-            font-family: 'Montserrat', sans-serif;
-            overflow-x: hidden;
-            background: linear-gradient(135deg, #fff5f5 0%, #fed7aa 30%, #fecdd3 70%, #ffe4e6 100%);
-            background-attachment: fixed;
-        }
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: linear-gradient(135deg, #fff0f3 0%, #ffccd5 50%, #ffb3c1 100%);
+      color: var(--text-dark);
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+    }
 
-        /* Floating particles canvas overlay */
-        #bgCanvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 10;
-        }
+    /* Floating Canvas */
+    #particles-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
 
-        /* Envelope animation styles */
-        .envelope-wrapper {
-            perspective: 1000px;
-        }
+    /* Music Control */
+    .music-btn {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 100;
+      background: white;
+      border: 2px solid var(--primary);
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      transition: all 0.3s ease;
+    }
+    .music-btn.playing {
+      animation: spin 4s linear infinite;
+      background: var(--primary);
+      color: white;
+    }
+    @keyframes spin {
+      100% { transform: rotate(360deg); }
+    }
 
-        .envelope {
-            position: relative;
-            width: 300px;
-            height: 200px;
-            background-color: #f43f5e;
-            border-bottom-left-radius: 12px;
-            border-bottom-right-radius: 12px;
-            box-shadow: 0 20px 40px rgba(225, 29, 72, 0.3);
-            cursor: pointer;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
+    /* Envelope Modal Overlay */
+    .envelope-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(40, 10, 20, 0.85);
+      backdrop-filter: blur(8px);
+      z-index: 999;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.8s ease, visibility 0.8s ease;
+      padding: 20px;
+    }
 
-        .envelope:hover {
-            transform: translateY(-8px) scale(1.02);
-            box-shadow: 0 25px 50px rgba(225, 29, 72, 0.4);
-        }
+    .envelope-overlay.opened {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
 
-        .envelope::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            border-left: 150px solid #fb7185;
-            border-top: 100px solid transparent;
-            border-bottom: 100px solid #fb7185;
-            border-bottom-left-radius: 12px;
-        }
+    .envelope-wrapper {
+      cursor: pointer;
+      perspective: 1000px;
+      text-align: center;
+    }
 
-        .envelope::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            right: 0;
-            border-right: 150px solid #f43f5e;
-            border-top: 100px solid transparent;
-            border-bottom: 100px solid #f43f5e;
-            border-bottom-right-radius: 12px;
-        }
+    .envelope {
+      width: 300px;
+      height: 200px;
+      background: #ff5e7e;
+      position: relative;
+      border-radius: 0 0 10px 10px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+      transition: transform 0.3s ease;
+    }
 
-        .envelope-flap {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 0;
-            height: 0;
-            border-left: 150px solid transparent;
-            border-right: 150px solid transparent;
-            border-top: 110px solid #e11d48;
-            transform-origin: top;
-            transition: transform 0.6s ease 0.2s, z-index 0.2s ease 0.2s;
-            z-index: 5;
-        }
+    .envelope-wrapper:hover .envelope {
+      transform: translateY(-5px) scale(1.02);
+    }
 
-        .envelope-letter {
-            position: absolute;
-            bottom: 10px;
-            left: 15px;
-            right: 15px;
-            height: 170px;
-            background: #fff;
-            border-radius: 8px;
-            padding: 15px;
-            text-align: center;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-            transition: transform 0.6s ease 0.4s;
-            z-index: 2;
-        }
+    .envelope::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      border-left: 150px solid #ff758f;
+      border-right: 150px solid #ff758f;
+      border-bottom: 100px solid #ff8fa3;
+      border-top: 100px solid transparent;
+      border-radius: 0 0 10px 10px;
+      z-index: 3;
+    }
 
-        .envelope.open .envelope-flap {
-            transform: rotateX(180deg);
-            z-index: 1;
-        }
+    .envelope-flap {
+      position: absolute;
+      top: 0;
+      left: 0;
+      border-left: 150px solid transparent;
+      border-right: 150px solid transparent;
+      border-top: 110px solid #ff4d6d;
+      transform-origin: top;
+      transition: transform 0.6s ease;
+      z-index: 4;
+    }
 
-        .envelope.open .envelope-letter {
-            transform: translateY(-80px);
-            z-index: 4;
-        }
+    .envelope-heart {
+      position: absolute;
+      top: 80px;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 35px;
+      color: #fff;
+      z-index: 5;
+      text-shadow: 0 2px 5px rgba(0,0,0,0.2);
+      animation: pulse 1.5s infinite;
+    }
 
-        /* Pulsing Seal */
-        .seal {
-            position: absolute;
-            top: 90px;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 50px;
-            height: 50px;
-            background: linear-gradient(45deg, #d4af37, #fef08a);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-            z-index: 6;
-            animation: pulse 2s infinite;
-        }
+    @keyframes pulse {
+      0%, 100% { transform: translate(-50%, -50%) scale(1); }
+      50% { transform: translate(-50%, -50%) scale(1.15); }
+    }
 
-        @keyframes pulse {
-            0% { transform: translate(-50%, -50%) scale(1); box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.7); }
-            70% { transform: translate(-50%, -50%) scale(1.1); box-shadow: 0 0 0 15px rgba(212, 175, 55, 0); }
-            100% { transform: translate(-50%, -50%) scale(1); box-shadow: 0 0 0 0 rgba(212, 175, 55, 0); }
-        }
+    .click-hint {
+      color: #fff;
+      font-size: 18px;
+      margin-top: 30px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      animation: bounce 2s infinite;
+    }
 
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #ffe4e6;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #fb7185;
-            border-radius: 4px;
-        }
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+      40% { transform: translateY(-10px); }
+      60% { transform: translateY(-5px); }
+    }
 
-        /* Glassmorphism effects */
-        .glass-card {
-            background: rgba(255, 255, 255, 0.75);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.6);
-        }
+    /* Main Container */
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 40px 20px 80px 20px;
+      position: relative;
+      z-index: 2;
+    }
 
-        /* Click floating heart animation */
-        .floating-heart {
-            position: fixed;
-            pointer-events: none;
-            animation: floatUp 1.5s ease-out forwards;
-            z-index: 9999;
-        }
+    /* Header Section */
+    .header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
 
-        @keyframes floatUp {
-            0% { opacity: 1; transform: translate(-50%, -50%) scale(0.5) rotate(0deg); }
-            100% { opacity: 0; transform: translate(-50%, -150px) scale(1.3) rotate(20deg); }
-        }
+    .header-tag {
+      display: inline-block;
+      padding: 6px 16px;
+      background: rgba(255, 75, 114, 0.1);
+      border: 1px solid var(--primary);
+      color: var(--primary-dark);
+      border-radius: 20px;
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 15px;
+      letter-spacing: 1px;
+    }
 
-        /* Video Slideshow Styles */
-        .video-container {
-            position: relative;
-            width: 100%;
-            max-width: 420px;
-            margin: 0 auto;
-            aspect-ratio: 9 / 16;
-            background: #000;
-            border-radius: 24px;
-            overflow: hidden;
-            box-shadow: 0 25px 50px -12px rgba(225, 29, 72, 0.35);
-        }
+    .main-title {
+      font-family: 'Dancing Script', cursive;
+      font-size: 3rem;
+      color: var(--primary-dark);
+      margin-bottom: 10px;
+      text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.8);
+    }
 
-        .slide-img {
-            position: absolute;
-            inset: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            opacity: 0;
-            transform: scale(1.08);
-            transition: opacity 1.2s ease-in-out, transform 4s ease-out;
-        }
+    .subtitle {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      color: #666;
+      font-size: 1.1rem;
+    }
 
-        .slide-img.active {
-            opacity: 1;
-            transform: scale(1);
-        }
+    /* Timer Section */
+    .timer-card {
+      background: var(--card-bg);
+      border-radius: 24px;
+      padding: 30px;
+      text-align: center;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.6);
+      margin-bottom: 40px;
+    }
 
-        /* Soft vignette overlay */
-        .video-overlay {
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(180deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0) 40%, rgba(0,0,0,0.7) 100%);
-            pointer-events: none;
-        }
-    </style>
+    .timer-title {
+      font-size: 1.1rem;
+      color: var(--text-dark);
+      margin-bottom: 20px;
+      font-weight: 600;
+    }
+
+    .timer-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 15px;
+    }
+
+    .timer-box {
+      background: white;
+      padding: 15px 10px;
+      border-radius: 16px;
+      box-shadow: 0 4px 12px rgba(255, 75, 114, 0.08);
+      border: 1px solid #ffe6ea;
+    }
+
+    .timer-num {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--primary);
+      line-height: 1.2;
+    }
+
+    .timer-unit {
+      font-size: 0.8rem;
+      color: #888;
+      text-transform: uppercase;
+      margin-top: 4px;
+      font-weight: 600;
+    }
+
+    .start-date-tag {
+      margin-top: 15px;
+      font-size: 0.85rem;
+      color: #777;
+    }
+
+    /* Letter Section */
+    .letter-card {
+      background: var(--card-bg);
+      border-radius: 24px;
+      padding: 35px 30px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.6);
+      margin-bottom: 40px;
+      position: relative;
+    }
+
+    .letter-card::before {
+      content: '“';
+      position: absolute;
+      top: 10px;
+      left: 20px;
+      font-size: 5rem;
+      font-family: 'Playfair Display', serif;
+      color: rgba(255, 75, 114, 0.15);
+      line-height: 1;
+    }
+
+    .letter-content {
+      font-size: 1.05rem;
+      line-height: 1.8;
+      color: #333;
+    }
+
+    .letter-content p {
+      margin-bottom: 15px;
+    }
+
+    .letter-sign {
+      text-align: right;
+      font-family: 'Dancing Script', cursive;
+      font-size: 1.8rem;
+      color: var(--primary-dark);
+      margin-top: 25px;
+      font-weight: 700;
+    }
+
+    /* Coupons Section */
+    .section-title {
+      text-align: center;
+      font-family: 'Dancing Script', cursive;
+      font-size: 2.2rem;
+      color: var(--primary-dark);
+      margin-bottom: 25px;
+    }
+
+    .coupons-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+      margin-bottom: 40px;
+    }
+
+    .coupon-card {
+      background: white;
+      border-radius: 20px;
+      padding: 25px;
+      border: 2px dashed #ffb3c1;
+      position: relative;
+      text-align: center;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.04);
+      transition: all 0.3s ease;
+    }
+
+    .coupon-card:hover {
+      transform: translateY(-5px);
+      border-color: var(--primary);
+      box-shadow: 0 10px 25px rgba(255, 75, 114, 0.2);
+    }
+
+    .coupon-icon {
+      font-size: 2.8rem;
+      margin-bottom: 12px;
+      display: inline-block;
+    }
+
+    .coupon-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin-bottom: 8px;
+    }
+
+    .coupon-desc {
+      font-size: 0.9rem;
+      color: #666;
+      margin-bottom: 18px;
+    }
+
+    .coupon-btn {
+      background: linear-gradient(45deg, var(--primary), var(--primary-dark));
+      color: white;
+      border: none;
+      padding: 10px 22px;
+      border-radius: 20px;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(255, 75, 114, 0.3);
+      transition: all 0.2s ease;
+    }
+
+    .coupon-btn:active {
+      transform: scale(0.95);
+    }
+
+    .coupon-btn.used {
+      background: #ccc;
+      box-shadow: none;
+      cursor: default;
+    }
+
+    /* Footer */
+    .footer {
+      text-align: center;
+      color: #777;
+      font-size: 0.9rem;
+      margin-top: 20px;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 600px) {
+      .main-title { font-size: 2.3rem; }
+      .timer-num { font-size: 1.5rem; }
+      .timer-grid { gap: 8px; }
+      .timer-box { padding: 10px 5px; }
+      .letter-card { padding: 25px 20px; }
+    }
+  </style>
 </head>
-<body class="min-h-screen text-slate-800 relative selection:bg-rose-200">
+<body>
 
-    <!-- Canvas Background for Hearts & Petals -->
-    <canvas id="bgCanvas"></canvas>
+  <!-- Audio Background -->
+  <audio id="bg-music" loop>
+    <source src="https://assets.mixkit.co/music/preview/mixkit-romantic-sunset-688.mp3" type="audio/mpeg">
+  </audio>
 
-    <!-- Audio Player (Background Music) -->
-    <audio id="bgMusic" loop preload="auto">
-        <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=romantic-piano-112199.mp3" type="audio/mpeg">
-    </audio>
+  <!-- Canvas hiệu ứng trái tim rơi -->
+  <canvas id="particles-canvas"></canvas>
 
-    <!-- Music Control Floating Button -->
-    <div class="fixed top-5 right-5 z-50 flex items-center gap-2">
-        <button id="musicToggle" onclick="toggleMusic()" class="glass-card w-12 h-12 rounded-full flex items-center justify-center text-rose-600 shadow-lg hover:scale-110 transition-transform duration-300 border border-rose-200 focus:outline-none">
-            <i id="musicIcon" class="fas fa-music text-lg"></i>
-        </button>
+  <!-- Nút bật/tắt nhạc -->
+  <button class="music-btn" id="musicToggle" onclick="toggleMusic()" title="Bật/Tắt Nhạc">🎵</button>
+
+  <!-- Phong bì thư mở đầu -->
+  <div class="envelope-overlay" id="envelopeOverlay">
+    <div class="envelope-wrapper" onclick="openEnvelope()">
+      <div class="envelope">
+        <div class="envelope-flap" id="flap"></div>
+        <div class="envelope-heart">💌</div>
+      </div>
+      <div class="click-hint">Chạm vào lá thư để mở quà 20/10 nhé Ebe yêu ❤️</div>
     </div>
+  </div>
 
-    <!-- Screen 1: Welcome Envelope Screen -->
-    <div id="welcomeScreen" class="fixed inset-0 z-40 flex flex-col items-center justify-center p-4 transition-opacity duration-1000 bg-rose-50/90 backdrop-blur-md">
-        <div class="text-center mb-10 animate-bounce">
-            <span class="inline-block px-4 py-1.5 rounded-full bg-rose-100 text-rose-600 text-sm font-semibold tracking-wider uppercase mb-3 border border-rose-200">20 Tháng 10 Cho Em</span>
-            <h1 class="font-dancing text-4xl sm:text-6xl font-bold text-rose-600 drop-shadow-sm">Món Quà Bất Ngờ...</h1>
-            <p class="font-montserrat text-slate-600 mt-2 text-sm sm:text-base">Nhấn vào phong bì để nhận bức thư yêu thương</p>
+  <!-- Nội dung chính -->
+  <div class="container">
+    <header class="header">
+      <span class="header-tag">20/10 - Ngày Phụ Nữ Việt Nam</span>
+      <h1 class="main-title">Happy Women's Day</h1>
+      <p class="subtitle">Gửi món quà nhỏ đong đầy tình cảm tới Ebe yêu 💕</p>
+    </header>
+
+    <!-- Đồng hồ đếm ngày yêu -->
+    <div class="timer-card">
+      <div class="timer-title">💖 Chúng ta đã bên nhau được 💖</div>
+      <div class="timer-grid">
+        <div class="timer-box">
+          <div class="timer-num" id="days">00</div>
+          <div class="timer-unit">Ngày</div>
         </div>
-
-        <div class="envelope-wrapper">
-            <div id="envelope" class="envelope" onclick="openEnvelope()">
-                <div class="envelope-flap"></div>
-                <div class="seal"><i class="fas fa-heart text-rose-600 text-xl"></i></div>
-                <div class="envelope-letter">
-                    <p class="font-dancing text-2xl text-rose-600 font-bold mt-4">Gửi Công Chúa Của Anh ❤️</p>
-                    <p class="text-xs text-slate-500 mt-2">Trang web này chuẩn bị riêng cho em đó!</p>
-                    <div class="mt-4 text-xs bg-rose-500 text-white py-1 px-3 rounded-full inline-block shadow">Chạm để mở ✨</div>
-                </div>
-            </div>
+        <div class="timer-box">
+          <div class="timer-num" id="hours">00</div>
+          <div class="timer-unit">Giờ</div>
         </div>
-    </div>
-
-    <!-- Main Content Container (Hidden by default) -->
-    <div id="mainContent" class="opacity-0 transition-opacity duration-1000 max-w-4xl mx-auto px-4 py-8 sm:py-12 relative z-20">
-        
-        <!-- Header -->
-        <header class="text-center mb-12">
-            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-card text-rose-600 text-sm font-medium mb-4 shadow-sm border border-rose-200">
-                <i class="fas fa-sparkles text-gold"></i>
-                <span>Happy Vietnamese Women's Day</span>
-                <i class="fas fa-sparkles text-gold"></i>
-            </div>
-            <h1 class="font-dancing text-5xl sm:text-7xl font-bold text-rose-600 mb-3 drop-shadow-md">Chúc Mừng Ngày 20/10</h1>
-            <p class="font-playfair italic text-lg sm:text-xl text-slate-700">"Dành tặng người phụ nữ tuyệt vời nhất trong cuộc đời anh"</p>
-        </header>
-
-        <!-- Section 1: Love Timer Counter -->
-        <section class="glass-card rounded-3xl p-6 sm:p-8 mb-10 shadow-xl border border-white/60 relative overflow-hidden">
-            <div class="absolute -right-10 -bottom-10 opacity-10 text-rose-600 pointer-events-none">
-                <i class="fas fa-heart text-9xl"></i>
-            </div>
-            
-            <div class="text-center mb-6">
-                <h2 class="font-dancing text-3xl sm:text-4xl text-rose-600 font-bold mb-1">Hành Trình Yêu Thương</h2>
-                <p class="text-sm text-slate-500 font-medium">Chúng mình đã cùng nhau đi qua quãng thời gian thật đẹp</p>
-            </div>
-
-            <!-- Counter Cards Grid -->
-            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 text-center">
-                <div class="bg-white/80 rounded-2xl p-4 shadow-sm border border-rose-100">
-                    <span id="days" class="font-dancing text-4xl sm:text-5xl font-bold text-rose-600 block">00</span>
-                    <span class="text-xs uppercase tracking-wider text-slate-500 font-medium">Ngày</span>
-                </div>
-                <div class="bg-white/80 rounded-2xl p-4 shadow-sm border border-rose-100">
-                    <span id="hours" class="font-dancing text-4xl sm:text-5xl font-bold text-rose-600 block">00</span>
-                    <span class="text-xs uppercase tracking-wider text-slate-500 font-medium">Giờ</span>
-                </div>
-                <div class="bg-white/80 rounded-2xl p-4 shadow-sm border border-rose-100">
-                    <span id="minutes" class="font-dancing text-4xl sm:text-5xl font-bold text-rose-600 block">00</span>
-                    <span class="text-xs uppercase tracking-wider text-slate-500 font-medium">Phút</span>
-                </div>
-                <div class="bg-white/80 rounded-2xl p-4 shadow-sm border border-rose-100">
-                    <span id="seconds" class="font-dancing text-4xl sm:text-5xl font-bold text-rose-600 block">00</span>
-                    <span class="text-xs uppercase tracking-wider text-slate-500 font-medium">Giây</span>
-                </div>
-            </div>
-
-            <!-- Start Date Selector / Toggle Info -->
-            <div class="mt-6 text-center">
-                <button onclick="toggleDateEditor()" class="text-xs text-rose-500 hover:text-rose-700 underline font-medium focus:outline-none">
-                    <i class="fas fa-calendar-alt mr-1"></i> Đổi ngày bắt đầu yêu
-                </button>
-                <div id="dateEditor" class="hidden mt-3 flex items-center justify-center gap-2">
-                    <input type="date" id="startDateInput" class="text-xs px-3 py-1.5 rounded-lg border border-rose-300 focus:outline-none focus:ring-2 focus:ring-rose-400 bg-white">
-                    <button onclick="saveStartDate()" class="text-xs bg-rose-500 text-white px-3 py-1.5 rounded-lg hover:bg-rose-600 font-medium">Lưu</button>
-                </div>
-            </div>
-        </section>
-
-        <!-- Section 2: Interactive Greeting Card -->
-        <section class="glass-card rounded-3xl p-6 sm:p-10 mb-10 shadow-xl border border-white/60 relative">
-            <div class="flex items-center justify-center mb-6">
-                <span class="h-px w-12 bg-rose-300"></span>
-                <i class="fas fa-envelope-open-text text-2xl text-rose-500 mx-3"></i>
-                <span class="h-px w-12 bg-rose-300"></span>
-            </div>
-
-            <div class="prose max-w-none text-center sm:text-left">
-                <p class="font-dancing text-3xl sm:text-4xl text-rose-600 font-bold mb-4">Em yêu à,</p>
-                
-                <p class="font-playfair text-base sm:text-lg text-slate-700 leading-relaxed italic mb-4">
-                    "Nhân ngày Phụ nữ Việt Nam 20/10, anh muốn gửi đến em tất cả sự dịu dàng, thương yêu và trân trọng nhất. Cảm ơn em vì đã xuất hiện, làm cho cuộc sống của anh tràn ngập màu sắc và niềm vui."
-                </p>
-                
-                <p class="text-sm sm:text-base text-slate-600 leading-relaxed mb-4">
-                    Chúc cho công chúa của anh luôn xinh đẹp, rạng rỡ, thành công trong mọi dự định và luôn cảm thấy hạnh phúc nhất khi ở bên anh. Mong rằng nụ cười của em sẽ luôn nở rộn ràng như những bông hoa đẹp nhất mùa thu.
-                </p>
-
-                <div class="bg-rose-50/80 p-4 rounded-2xl border border-rose-100 my-6 text-center">
-                    <p class="font-dancing text-xl text-rose-600">
-                        "Dù thế giới có đổi thay ra sao,<br>Trong mắt anh em vẫn luôn là điều tuyệt vời nhất!"
-                    </p>
-                </div>
-
-                <div class="text-right mt-6">
-                    <p class="font-dancing text-2xl font-bold text-rose-600">Yêu em nhiều lắm ❤️</p>
-                    <p class="text-xs text-slate-400 italic">Mãi bên nhau em nhé!</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- Section 3: VIDEO SLIDESHOW KỶ NIỆM (Phần làm mới) -->
-        <section class="glass-card rounded-3xl p-6 sm:p-8 mb-10 shadow-xl border border-white/60">
-            <div class="text-center mb-6">
-                <span class="inline-block px-3 py-1 bg-rose-100 text-rose-600 text-xs font-semibold rounded-full uppercase tracking-widest mb-2">
-                    <i class="fas fa-film mr-1"></i> Our Love Story
-                </span>
-                <h2 class="font-dancing text-3xl sm:text-4xl text-rose-600 font-bold">Thước Phim Kỷ Niệm</h2>
-                <p class="text-sm text-slate-500 mt-1">Những khoảnh khắc đáng yêu và hạnh phúc nhất của hai đứa mình</p>
-            </div>
-
-            <!-- Video Player Box -->
-            <div class="video-container relative group">
-                <!-- Slides Canvas / Images -->
-                <div id="slidesWrapper" class="w-full h-full relative">
-                    <!-- Images rendered with base64 / paths -->
-                    <img class="slide-img active" src="image.png" alt="Kỷ niệm 1">
-                    <img class="slide-img" src="image_2.png" alt="Kỷ niệm 2">
-                    <img class="slide-img" src="image_3.png" alt="Kỷ niệm 3">
-                    <img class="slide-img" src="image_4.png" alt="Kỷ niệm 4">
-                    <img class="slide-img" src="image_5.png" alt="Kỷ niệm 5">
-                </div>
-
-                <!-- Dark gradient overlay -->
-                <div class="video-overlay"></div>
-
-                <!-- Top Header Overlay -->
-                <div class="absolute top-4 left-4 right-4 flex items-center justify-between text-white z-20">
-                    <div class="flex items-center gap-2">
-                        <span class="w-2 h-2 rounded-full bg-rose-500 animate-ping"></span>
-                        <span class="text-xs font-medium tracking-wider uppercase drop-shadow">Memory Movie</span>
-                    </div>
-                    <span id="slideCounter" class="text-xs bg-black/40 backdrop-blur-md px-2.5 py-1 rounded-full border border-white/20">1 / 5</span>
-                </div>
-
-                <!-- Caption text overlay at bottom -->
-                <div class="absolute bottom-16 left-4 right-4 z-20 text-center">
-                    <p id="slideCaption" class="font-dancing text-2xl sm:text-3xl text-white font-bold drop-shadow-lg transition-all duration-500">
-                        Những khoảnh khắc nhí nhố bên nhau 🥰
-                    </p>
-                </div>
-
-                <!-- Video Controls Bar -->
-                <div class="absolute bottom-4 left-4 right-4 z-20 flex items-center justify-between bg-black/40 backdrop-blur-md px-4 py-2 rounded-2xl border border-white/20">
-                    <button onclick="prevSlide()" class="text-white/80 hover:text-white transition focus:outline-none p-1">
-                        <i class="fas fa-step-backward text-sm"></i>
-                    </button>
-                    
-                    <button id="playPauseBtn" onclick="togglePlayVideo()" class="w-8 h-8 rounded-full bg-rose-500 text-white flex items-center justify-center hover:bg-rose-600 transition shadow focus:outline-none">
-                        <i id="playIcon" class="fas fa-pause text-xs"></i>
-                    </button>
-
-                    <button onclick="nextSlide()" class="text-white/80 hover:text-white transition focus:outline-none p-1">
-                        <i class="fas fa-step-forward text-sm"></i>
-                    </button>
-                </div>
-
-                <!-- Progress Bar -->
-                <div class="absolute bottom-0 left-0 right-0 h-1 bg-white/20 z-20">
-                    <div id="videoProgress" class="h-full bg-rose-500 transition-all duration-300 w-0"></div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Section 4: Interactive Secret Gift / Love Coupons -->
-        <section class="glass-card rounded-3xl p-6 sm:p-8 mb-10 shadow-xl border border-white/60">
-            <div class="text-center mb-6">
-                <span class="inline-block p-3 rounded-full bg-rose-100 text-rose-500 mb-2">
-                    <i class="fas fa-gift text-2xl"></i>
-                </span>
-                <h2 class="font-dancing text-3xl sm:text-4xl text-rose-600 font-bold">Phiếu Quà Tặng Yêu Thương</h2>
-                <p class="text-sm text-slate-500 mt-1">Em có thể bấm "Sử Dụng" bất cứ lúc nào em muốn nhé!</p>
-            </div>
-
-            <!-- Coupons Grid -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <!-- Coupon 1 -->
-                <div class="bg-gradient-to-r from-rose-50 to-pink-50 p-4 rounded-2xl border border-rose-200 relative overflow-hidden flex items-center justify-between shadow-sm">
-                    <div class="flex items-center gap-3">
-                        <div class="w-12 h-12 rounded-full bg-rose-500 text-white flex items-center justify-center text-xl shrink-0">
-                            <i class="fas fa-mug-hot"></i>
-                        </div>
-                        <div>
-                            <h3 class="font-bold text-slate-800 text-sm sm:text-base">1 Cốc Trà Sữa Size L</h3>
-                            <p class="text-xs text-slate-500">Topping đầy đủ + 70% đường 30% đá</p>
-                        </div>
-                    </div>
-                    <button onclick="useCoupon(this, '1 Cốc Trà Sữa')" class="coupon-btn px-3 py-1.5 bg-rose-500 hover:bg-rose-600 text-white text-xs font-semibold rounded-xl shadow transition duration-200 shrink-0">
-                        Sử dụng
-                    </button>
-                </div>
-
-                <!-- Coupon 2 -->
-                <div class="bg-gradient-to-r from-rose-50 to-pink-50 p-4 rounded-2xl border border-rose-200 relative overflow-hidden flex items-center justify-between shadow-sm">
-                    <div class="flex items-center gap-3">
-                        <div class="w-12 h-12 rounded-full bg-rose-500 text-white flex items-center justify-center text-xl shrink-0">
-                            <i class="fas fa-motorcycle"></i>
-                        </div>
-                        <div>
-                            <h3 class="font-bold text-slate-800 text-sm sm:text-base">1 Buổi Đi Chơi Hẹn Hò</h3>
-                            <p class="text-xs text-slate-500">Đi bất cứ đâu em thích, anh làm tài xế</p>
-                        </div>
-                    </div>
-                    <button onclick="useCoupon(this, '1 Buổi đi chơi')" class="coupon-btn px-3 py-1.5 bg-rose-500 hover:bg-rose-600 text-white text-xs font-semibold rounded-xl shadow transition duration-200 shrink-0">
-                        Sử dụng
-                    </button>
-                </div>
-
-                <!-- Coupon 3 -->
-                <div class="bg-gradient-to-r from-rose-50 to-pink-50 p-4 rounded-2xl border border-rose-200 relative overflow-hidden flex items-center justify-between shadow-sm">
-                    <div class="flex items-center gap-3">
-                        <div class="w-12 h-12 rounded-full bg-rose-500 text-white flex items-center justify-center text-xl shrink-0">
-                            <i class="fas fa-spa"></i>
-                        </div>
-                        <div>
-                            <h3 class="font-bold text-slate-800 text-sm sm:text-base">1 Lần Massage Xoa Bóp</h3>
-                            <p class="text-xs text-slate-500">Xoa lưng, đấm vai 30 phút tận tình</p>
-                        </div>
-                    </div>
-                    <button onclick="useCoupon(this, 'Massage xoa bóp')" class="coupon-btn px-3 py-1.5 bg-rose-500 hover:bg-rose-600 text-white text-xs font-semibold rounded-xl shadow transition duration-200 shrink-0">
-                        Sử dụng
-                    </button>
-                </div>
-
-                <!-- Coupon 4 -->
-                <div class="bg-gradient-to-r from-rose-50 to-pink-50 p-4 rounded-2xl border border-rose-200 relative overflow-hidden flex items-center justify-between shadow-sm">
-                    <div class="flex items-center gap-3">
-                        <div class="w-12 h-12 rounded-full bg-rose-500 text-white flex items-center justify-center text-xl shrink-0">
-                            <i class="fas fa-shield-cat"></i>
-                        </div>
-                        <div>
-                            <h3 class="font-bold text-slate-800 text-sm sm:text-base">Thẻ Miễn Giận Dỗi</h3>
-                            <p class="text-xs text-slate-500">Anh không được giận em trong 1 ngày</p>
-                        </div>
-                    </div>
-                    <button onclick="useCoupon(this, 'Miễn phạt giận dỗi')" class="coupon-btn px-3 py-1.5 bg-rose-500 hover:bg-rose-600 text-white text-xs font-semibold rounded-xl shadow transition duration-200 shrink-0">
-                        Sử dụng
-                    </button>
-                </div>
-            </div>
-        </section>
-
-        <!-- Footer -->
-        <footer class="text-center text-slate-500 text-xs py-6">
-            <p>Made with ❤️ for my love | Happy 20/10 Day</p>
-        </footer>
-    </div>
-
-    <!-- Coupon Modal Notification -->
-    <div id="couponModal" class="fixed inset-0 z-50 hidden bg-black/60 flex items-center justify-center p-4 backdrop-blur-sm">
-        <div class="bg-white rounded-3xl p-6 max-w-sm w-full text-center shadow-2xl border border-rose-100 transform transition-all scale-100">
-            <div class="w-16 h-16 bg-rose-100 text-rose-500 rounded-full flex items-center justify-center mx-auto mb-4 text-3xl">
-                <i class="fas fa-check-circle"></i>
-            </div>
-            <h3 class="font-dancing text-3xl font-bold text-rose-600 mb-2">Đã Kích Hoạt!</h3>
-            <p id="couponModalText" class="text-slate-600 text-sm mb-6"></p>
-            <button onclick="closeCouponModal()" class="w-full py-3 bg-rose-500 hover:bg-rose-600 text-white font-semibold rounded-xl shadow-md transition duration-200">
-                Đồng ý luôn ❤️
-            </button>
+        <div class="timer-box">
+          <div class="timer-num" id="minutes">00</div>
+          <div class="timer-unit">Phút</div>
         </div>
+        <div class="timer-box">
+          <div class="timer-num" id="seconds">00</div>
+          <div class="timer-unit">Giây</div>
+        </div>
+      </div>
+      <div class="start-date-tag">Bắt đầu hành trình từ: 24/12/2024 ✨</div>
     </div>
 
-    <!-- JavaScript Logic -->
-    <script>
-        /* ----------------------------------------------------
-           1. CANVAS PARTICLES ANIMATION (Hearts & Petals)
-        ---------------------------------------------------- */
-        const canvas = document.getElementById('bgCanvas');
-        const ctx = canvas.getContext('2d');
+    <!-- Thư gửi Ebe yêu -->
+    <div class="letter-card">
+      <div class="letter-content">
+        <p><strong>Ebe yêu à,</strong></p>
+        <p>Nhân ngày 20/10 - Ngày Phụ nữ Việt Nam, anh muốn gửi tới ebe những lời chúc ngọt ngào nhất từ đáy lòng. Cảm ơn ebe vì đã xuất hiện và mang lại biết bao niềm vui, sự ấm áp cho cuộc sống của anh.</p>
+        <p>Chúc ebe yêu của anh luôn tươi tắn, xinh đẹp, nhiều sức khỏe và thật hạnh phúc. Mong rằng những ngày tháng sắp tới của chúng mình sẽ luôn tràn ngập tiếng cười và những khoảnh khắc đáng nhớ bên nhau.</p>
+        <p>Yêu ebe rất nhiều! 🌸✨</p>
+      </div>
+      <div class="letter-sign">Love you forever ❤️</div>
+    </div>
 
-        let particles = [];
-        const particleCount = 35;
+    <!-- Phiếu quà tặng dành riêng cho Ebe -->
+    <h2 class="section-title">Phiếu Quà Tặng Dành Cho Ebe 🎁</h2>
+    <div class="coupons-grid">
+      <div class="coupon-card">
+        <div class="coupon-icon">💆‍♂️</div>
+        <div class="coupon-title">Vé Massage Thư Giãn</div>
+        <div class="coupon-desc">Được hưởng dịch vụ massage đặc biệt từ anh bất cứ lúc nào ebe mỏi mệt.</div>
+        <button class="coupon-btn" onclick="useCoupon(this)">Dùng ngay</button>
+      </div>
 
-        function resizeCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
+      <div class="coupon-card">
+        <div class="coupon-icon">🎡</div>
+        <div class="coupon-title">Một Chuyến Đi Chơi</div>
+        <div class="coupon-desc">Lên lịch đi chơi, hẹn hò đến bất kỳ đâu ebe yêu thích.</div>
+        <button class="coupon-btn" onclick="useCoupon(this)">Dùng ngay</button>
+      </div>
+    </div>
 
-        window.addEventListener('resize', resizeCanvas);
-        resizeCanvas();
+    <footer class="footer">
+      Made with ❤️ for Ebe yêu | 20/10
+    </footer>
+  </div>
 
-        class Particle {
-            constructor() {
-                this.reset();
-            }
+  <script>
+    // --- 1. Mốc thời gian yêu nhau (24/12/2024) ---
+    const startDate = new Date('2024-12-24T00:00:00');
 
-            reset() {
-                this.x = Math.random() * canvas.width;
-                this.y = -20;
-                this.size = Math.random() * 12 + 8;
-                this.speedY = Math.random() * 1.5 + 0.8;
-                this.speedX = Math.random() * 1 - 0.5;
-                this.opacity = Math.random() * 0.6 + 0.4;
-                this.rotation = Math.random() * 360;
-                this.rotSpeed = (Math.random() - 0.5) * 2;
-                this.type = Math.random() > 0.5 ? 'heart' : 'petal';
-                this.color = ['#f43f5e', '#fb7185', '#fecdd3', '#fda4af'][Math.floor(Math.random() * 4)];
-            }
+    function updateTimer() {
+      const now = new Date();
+      const diff = now - startDate;
 
-            update() {
-                this.y += this.speedY;
-                this.x += Math.sin(this.y * 0.01) + this.speedX;
-                this.rotation += this.rotSpeed;
+      if (diff < 0) {
+        document.getElementById('days').innerText = "0";
+        document.getElementById('hours').innerText = "00";
+        document.getElementById('minutes').innerText = "00";
+        document.getElementById('seconds').innerText = "00";
+        return;
+      }
 
-                if (this.y > canvas.height + 20) {
-                    this.reset();
-                }
-            }
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+      const minutes = Math.floor((diff / 1000 / 60) % 60);
+      const seconds = Math.floor((diff / 1000) % 60);
 
-            draw() {
-                ctx.save();
-                ctx.translate(this.x, this.y);
-                ctx.rotate((this.rotation * Math.PI) / 180);
-                ctx.globalAlpha = this.opacity;
-                ctx.fillStyle = this.color;
+      document.getElementById('days').innerText = days;
+      document.getElementById('hours').innerText = hours < 10 ? '0' + hours : hours;
+      document.getElementById('minutes').innerText = minutes < 10 ? '0' + minutes : minutes;
+      document.getElementById('seconds').innerText = seconds < 10 ? '0' + seconds : seconds;
+    }
+    setInterval(updateTimer, 1000);
+    updateTimer();
 
-                if (this.type === 'heart') {
-                    ctx.beginPath();
-                    const topCurveHeight = this.size * 0.3;
-                    ctx.moveTo(0, topCurveHeight);
-                    ctx.bezierCurveTo(0, 0, -this.size / 2, 0, -this.size / 2, topCurveHeight);
-                    ctx.bezierCurveTo(-this.size / 2, (this.size + topCurveHeight) / 2, 0, this.size, 0, this.size);
-                    ctx.bezierCurveTo(0, this.size, this.size / 2, (this.size + topCurveHeight) / 2, this.size / 2, topCurveHeight);
-                    ctx.bezierCurveTo(this.size / 2, 0, 0, 0, 0, topCurveHeight);
-                    ctx.closePath();
-                    ctx.fill();
-                } else {
-                    ctx.beginPath();
-                    ctx.ellipse(0, 0, this.size / 2, this.size, Math.PI / 4, 0, 2 * Math.PI);
-                    ctx.fill();
-                }
+    // --- 2. Xử lý mở phong bì ---
+    const bgMusic = document.getElementById('bg-music');
+    const musicBtn = document.getElementById('musicToggle');
 
-                ctx.restore();
-            }
-        }
+    function openEnvelope() {
+      const flap = document.getElementById('flap');
+      const overlay = document.getElementById('envelopeOverlay');
+      
+      flap.style.transform = 'rotateX(180deg)';
+      
+      // Bật nhạc nền
+      bgMusic.play().then(() => {
+        musicBtn.classList.add('playing');
+      }).catch(err => console.log("Trình duyệt chặn tự động phát âm thanh: ", err));
 
-        function initParticles() {
-            particles = [];
-            for (let i = 0; i < particleCount; i++) {
-                const p = new Particle();
-                p.y = Math.random() * canvas.height;
-                particles.push(p);
-            }
-        }
-
-        function animateParticles() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            particles.forEach(p => {
-                p.update();
-                p.draw();
-            });
-            requestAnimationFrame(animateParticles);
-        }
-
-        initParticles();
-        animateParticles();
-
-        /* ----------------------------------------------------
-           2. MUSIC PLAYER CONTROLLER
-        ---------------------------------------------------- */
-        const bgMusic = document.getElementById('bgMusic');
-        const musicIcon = document.getElementById('musicIcon');
-        let isPlaying = false;
-
-        function toggleMusic() {
-            if (isPlaying) {
-                bgMusic.pause();
-                musicIcon.className = "fas fa-music text-slate-400";
-            } else {
-                bgMusic.play().then(() => {
-                    isPlaying = true;
-                    musicIcon.className = "fas fa-heart text-rose-500 animate-spin";
-                }).catch(e => console.log("Audio play blocked", e));
-            }
-            isPlaying = !isPlaying;
-        }
-
-        /* ----------------------------------------------------
-           3. ENVELOPE & WELCOME SCREEN
-        ---------------------------------------------------- */
-        function openEnvelope() {
-            const envelope = document.getElementById('envelope');
-            envelope.classList.add('open');
-
-            bgMusic.play().then(() => {
-                isPlaying = true;
-                musicIcon.className = "fas fa-heart text-rose-500 animate-pulse";
-            }).catch(() => {});
-
-            confetti({
-                particleCount: 100,
-                spread: 70,
-                origin: { y: 0.6 },
-                colors: ['#f43f5e', '#fb7185', '#d4af37', '#ffe4e6']
-            });
-
-            setTimeout(() => {
-                const welcomeScreen = document.getElementById('welcomeScreen');
-                const mainContent = document.getElementById('mainContent');
-                
-                welcomeScreen.classList.add('opacity-0');
-                setTimeout(() => {
-                    welcomeScreen.style.display = 'none';
-                    mainContent.classList.remove('opacity-0');
-                    startVideoSlideshow(); // Start video when entering main content
-                }, 1000);
-            }, 1200);
-        }
-
-        /* ----------------------------------------------------
-           4. LOVE TIMER COUNTER LOGIC
-        ---------------------------------------------------- */
-        let startDateStr = localStorage.getItem('loveStartDate') || '2023-02-14';
-
-        function updateCounter() {
-            const startDate = new Date(startDateStr);
-            const now = new Date();
-            const diffTime = Math.abs(now - startDate);
-
-            const days = Math.floor(diffTime / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((diffTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((diffTime % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((diffTime % (1000 * 60)) / 1000);
-
-            document.getElementById('days').innerText = String(days).padStart(2, '0');
-            document.getElementById('hours').innerText = String(hours).padStart(2, '0');
-            document.getElementById('minutes').innerText = String(minutes).padStart(2, '0');
-            document.getElementById('seconds').innerText = String(seconds).padStart(2, '0');
-        }
-
-        setInterval(updateCounter, 1000);
-        updateCounter();
-
-        function toggleDateEditor() {
-            const editor = document.getElementById('dateEditor');
-            editor.classList.toggle('hidden');
-            if (!editor.classList.contains('hidden')) {
-                document.getElementById('startDateInput').value = startDateStr;
-            }
-        }
-
-        function saveStartDate() {
-            const val = document.getElementById('startDateInput').value;
-            if (val) {
-                startDateStr = val;
-                localStorage.setItem('loveStartDate', val);
-                updateCounter();
-                toggleDateEditor();
-            }
-        }
-
-        /* ----------------------------------------------------
-           5. VIDEO SLIDESHOW LOGIC
-        ---------------------------------------------------- */
-        const captions = [
-            "Những khoảnh khắc nhí nhố bên nhau 🥰",
-            "Nụ cười rạng rỡ của em làm anh xao xuyến ✨",
-            "Thật đẹp đôi khi sánh bước cùng nhau ❤️",
-            "Cùng đắp mặt nạ thư giãn cực dễ thương 🐱",
-            "Mãi mãi là điểm tựa ấm áp cho em 🤗"
-        ];
-
-        let currentSlide = 0;
-        const slides = document.querySelectorAll('.slide-img');
-        const totalSlides = slides.length;
-        let slideInterval = null;
-        let isVideoPlaying = true;
-        const slideDuration = 3500; // 3.5s per slide
-
-        function showSlide(index) {
-            slides.forEach((slide, i) => {
-                if (i === index) {
-                    slide.classList.add('active');
-                } else {
-                    slide.classList.remove('active');
-                }
-            });
-
-            document.getElementById('slideCounter').innerText = `${index + 1} / ${totalSlides}`;
-            const captionElem = document.getElementById('slideCaption');
-            captionElem.style.opacity = '0';
-            setTimeout(() => {
-                captionElem.innerText = captions[index];
-                captionElem.style.opacity = '1';
-            }, 250);
-
-            // Reset progress bar animation
-            const progress = document.getElementById('videoProgress');
-            progress.style.transition = 'none';
-            progress.style.width = '0%';
-            setTimeout(() => {
-                if (isVideoPlaying) {
-                    progress.style.transition = `width ${slideDuration}ms linear`;
-                    progress.style.width = '100%';
-                }
-            }, 50);
-        }
-
-        function nextSlide() {
-            currentSlide = (currentSlide + 1) % totalSlides;
-            showSlide(currentSlide);
-        }
-
-        function prevSlide() {
-            currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
-            showSlide(currentSlide);
-        }
-
-        function startVideoSlideshow() {
-            showSlide(currentSlide);
-            if (slideInterval) clearInterval(slideInterval);
-            slideInterval = setInterval(nextSlide, slideDuration);
-            isVideoPlaying = true;
-            document.getElementById('playIcon').className = 'fas fa-pause text-xs';
-        }
-
-        function togglePlayVideo() {
-            const icon = document.getElementById('playIcon');
-            const progress = document.getElementById('videoProgress');
-
-            if (isVideoPlaying) {
-                clearInterval(slideInterval);
-                isVideoPlaying = false;
-                icon.className = 'fas fa-play text-xs pl-0.5';
-                progress.style.transition = 'none';
-            } else {
-                startVideoSlideshow();
-            }
-        }
-
-        /* ----------------------------------------------------
-           6. INTERACTIVE CLICK EFFECT (FLOATING HEARTS)
-        ---------------------------------------------------- */
-        document.addEventListener('click', function(e) {
-            if (e.target.closest('button') || e.target.closest('.envelope')) return;
-
-            const heart = document.createElement('div');
-            heart.className = 'floating-heart text-rose-500 text-xl';
-            heart.innerHTML = '<i class="fas fa-heart"></i>';
-            heart.style.left = `${e.clientX}px`;
-            heart.style.top = `${e.clientY}px`;
-
-            document.body.appendChild(heart);
-
-            setTimeout(() => {
-                heart.remove();
-            }, 1500);
+      // Bắn pháo hoa trái tim
+      if (typeof confetti === 'function') {
+        confetti({
+          particleCount: 80,
+          spread: 70,
+          origin: { y: 0.6 }
         });
+      }
 
-        /* ----------------------------------------------------
-           7. LOVE COUPON SYSTEM
-        ---------------------------------------------------- */
-        function useCoupon(btn, giftName) {
-            btn.disabled = true;
-            btn.innerText = "Đã nhận";
-            btn.classList.remove('bg-rose-500', 'hover:bg-rose-600');
-            btn.classList.add('bg-slate-300', 'cursor-not-allowed');
+      setTimeout(() => {
+        overlay.classList.add('opened');
+      }, 600);
+    }
 
-            document.getElementById('couponModalText').innerText = `Em đã đổi thành công: "${giftName}". Anh sẽ thực hiện ngay cho em nhé! ❤️`;
-            document.getElementById('couponModal').classList.remove('hidden');
+    function toggleMusic() {
+      if (bgMusic.paused) {
+        bgMusic.play();
+        musicBtn.classList.add('playing');
+      } else {
+        bgMusic.pause();
+        musicBtn.classList.remove('playing');
+      }
+    }
 
-            confetti({
-                particleCount: 80,
-                spread: 60,
-                origin: { y: 0.7 }
-            });
+    // --- 3. Xử lý dùng Coupon ---
+    function useCoupon(btn) {
+      if (btn.classList.contains('used')) return;
+      btn.classList.add('used');
+      btn.innerText = 'Đã áp dụng ✓';
+
+      if (typeof confetti === 'function') {
+        confetti({
+          particleCount: 50,
+          angle: 60,
+          spread: 55,
+          origin: { x: 0 }
+        });
+        confetti({
+          particleCount: 50,
+          angle: 120,
+          spread: 55,
+          origin: { x: 1 }
+        });
+      }
+    }
+
+    // --- 4. Hiệu ứng canvas tim rơi ---
+    const canvas = document.getElementById('particles-canvas');
+    const ctx = canvas.getContext('2d');
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    const hearts = [];
+    class Heart {
+      constructor() {
+        this.reset();
+      }
+      reset() {
+        this.x = Math.random() * canvas.width;
+        this.y = -20;
+        this.size = Math.random() * 15 + 8;
+        this.speedY = Math.random() * 1.5 + 0.8;
+        this.speedX = Math.random() * 1 - 0.5;
+        this.opacity = Math.random() * 0.5 + 0.3;
+        this.color = `hsl(${Math.random() * 20 + 340}, 100%, 75%)`;
+      }
+      update() {
+        this.y += this.speedY;
+        this.x += this.speedX;
+        if (this.y > canvas.height + 20) {
+          this.reset();
         }
+      }
+      draw() {
+        ctx.save();
+        ctx.globalAlpha = this.opacity;
+        ctx.fillStyle = this.color;
+        ctx.beginPath();
+        const topCurveHeight = this.size * 0.3;
+        ctx.moveTo(this.x, this.y + topCurveHeight);
+        ctx.bezierCurveTo(
+          this.x, this.y, 
+          this.x - this.size / 2, this.y, 
+          this.x - this.size / 2, this.y + topCurveHeight
+        );
+        ctx.bezierCurveTo(
+          this.x - this.size / 2, this.y + (this.size + topCurveHeight) / 2, 
+          this.x, this.y + this.size, 
+          this.x, this.y + this.size
+        );
+        ctx.bezierCurveTo(
+          this.x, this.y + this.size, 
+          this.x + this.size / 2, this.y + (this.size + topCurveHeight) / 2, 
+          this.x + this.size / 2, this.y + topCurveHeight
+        );
+        ctx.bezierCurveTo(
+          this.x + this.size / 2, this.y, 
+          this.x, this.y, 
+          this.x, this.y + topCurveHeight
+        );
+        ctx.closePath();
+        ctx.fill();
+        ctx.restore();
+      }
+    }
 
-        function closeCouponModal() {
-            document.getElementById('couponModal').classList.add('hidden');
-        }
-    </script>
+    for (let i = 0; i < 25; i++) {
+      hearts.push(new Heart());
+    }
+
+    function animateParticles() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      hearts.forEach(heart => {
+        heart.update();
+        heart.draw();
+      });
+      requestAnimationFrame(animateParticles);
+    }
+    animateParticles();
+  </script>
 </body>
 </html>
